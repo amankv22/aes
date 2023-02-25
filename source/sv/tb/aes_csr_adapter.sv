@@ -31,3 +31,12 @@ module aes_csr_adapter #(parameter ADDR_WIDTH=32, DATA_WIDTH=32) (
 //---------------------------------------------------------------------------------------------
 
 endmodule
+
+bind aes aes_csr_adapter #(.ADDR_WIDTH(32), .DATA_WIDTH(32)) aes_csr_adapter
+  (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+    .addr(aes.tl_i.a_address),
+    .wdata(aes.tl_i.a_data),
+    .rdata(aes.tl_o.d_data)
+  );
