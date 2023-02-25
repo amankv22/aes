@@ -4,6 +4,8 @@
 //
 // AES top-level wrapper
 
+`include "prim_assert.sv"
+
 module aes
   import aes_pkg::*;
   import aes_reg_pkg::*;
@@ -242,7 +244,7 @@ module aes
   ////////////////
   // Assertions //
   ////////////////
-/*
+
   // All outputs should have a known value after reset
   `ASSERT_KNOWN(TlODValidKnown, tl_o.d_valid)
   `ASSERT_KNOWN(TlOAReadyKnown, tl_o.a_ready)
@@ -294,5 +296,5 @@ module aes
   end
 
   // Alert assertions for reg_we onehot check
-  `ASSERT_PRIM_REG_WE_ONEHOT_ERROR_TRIGGER_ALERT(RegWeOnehotCheck_A, u_reg, alert_tx_o[1])*/
+  `ASSERT_PRIM_REG_WE_ONEHOT_ERROR_TRIGGER_ALERT(RegWeOnehotCheck_A, u_reg, alert_tx_o[1])
 endmodule
