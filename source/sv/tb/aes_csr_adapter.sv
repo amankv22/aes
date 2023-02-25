@@ -3,7 +3,10 @@ module aes_csr_adapter #(parameter ADDR_WIDTH=32, DATA_WIDTH=32) (
   input logic rst_ni,
   input logic [ADDR_WIDTH-1:0] addr,
   input logic [DATA_WIDTH-1:0] wdata,
-  input logic [DATA_WIDTH-1:0] rdata
+  input logic [DATA_WIDTH-1:0] rdata,
+  input logic ready,
+  input logic valid,
+  input logic [2:0] opcode
 );
 
 //---------------------------------------- Main logic -----------------------------------------
@@ -11,8 +14,8 @@ module aes_csr_adapter #(parameter ADDR_WIDTH=32, DATA_WIDTH=32) (
   logic wr;
   logic rd;
 
-  assign wr = wr_en && acc_en;
-  assign rd = (!wr_en) && acc_en;
+  assign wr = ready && valid && (opcode==0);
+  assign rd = ready && valid && (opcode==4);
 //---------------------------------------------------------------------------------------------
 
 //-------------------------------------- Instantiations ---------------------------------------
@@ -38,5 +41,8 @@ bind aes aes_csr_adapter #(.ADDR_WIDTH(32), .DATA_WIDTH(32)) aes_csr_adapter
     .rst_ni(rst_ni),
     .addr(aes.tl_i.a_address),
     .wdata(aes.tl_i.a_data),
-    .rdata(aes.tl_o.d_data)
+    .rdata(aes.tl_o.d_data),
+    .ready(aes.tl_i.d_ready),
+    .valid(aes.tl_i.a_valid),
+    .opcode(aes.tl_i.a_opcode)
   );
