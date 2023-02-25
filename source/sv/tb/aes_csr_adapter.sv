@@ -1,9 +1,9 @@
 module aes_csr_adapter #(parameter ADDR_WIDTH=32, DATA_WIDTH=32) (
   input logic clk_i,
-  logic rst_ni,
-  logic [ADDR_WIDTH-1:0] addr,
-  logic [DATA_WIDTH-1:0] wdata,
-  logic [DATA_WIDTH-1:0] rdata
+  input logic rst_ni,
+  input logic [ADDR_WIDTH-1:0] addr,
+  input logic [DATA_WIDTH-1:0] wdata,
+  input logic [DATA_WIDTH-1:0] rdata
 );
 
 //---------------------------------------- Main logic -----------------------------------------
